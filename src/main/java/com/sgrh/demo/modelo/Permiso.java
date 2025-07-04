@@ -1,5 +1,7 @@
+// Paquete del proyecto donde se ubica la clase
 package com.sgrh.demo.modelo;
 
+// Importación de clase para manejar fechas sin zona horaria
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
@@ -11,37 +13,48 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+// Declara esta clase como una entidad JPA (representará una tabla en la base de datos)
 @Entity
+
+// Define el nombre de la tabla en la base de datos
 @Table(name = "permiso")
 public class Permiso {
 
+    // Clave primaria de la tabla 'permiso', autogenerada
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // Relación muchos-a-uno: el autor del permiso es una persona
     @ManyToOne
-    @JoinColumn(name = "id_autor", nullable = false)
+    @JoinColumn(name = "id_autor", nullable = false) // Columna FK obligatoria
     private Persona autor;
 
+    // Relación muchos-a-uno: el permiso es para otra persona
     @ManyToOne
-    @JoinColumn(name = "id_persona", nullable = false)
+    @JoinColumn(name = "id_persona", nullable = false) // Columna FK obligatoria
     private Persona persona;
 
+    // Nombre completo de la persona a la que se le otorga el permiso
     @Column(name = "nombre_persona")
     private String nombrePersona;
 
+    // Documento de identidad de la persona a la que se le otorga el permiso
     @Column(name = "documento_identidad")
     private String documentoIdentidad;
 
+    // Razón o motivo del permiso
     private String razon;
 
+    // Fecha en que se solicitó el permiso
     @Column(name = "fecha_solicitud")
     private LocalDate fechaSolicitud;
 
+    // Fecha en que se aplica o concede el permiso
     @Column(name = "fecha_aplicacion")
     private LocalDate fechaAplicacion;
 
-    // Getters y Setters
+    // Getters y Setters: métodos públicos para acceder y modificar los atributos
 
     public Integer getId() {
         return id;

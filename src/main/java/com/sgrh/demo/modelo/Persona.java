@@ -1,5 +1,7 @@
+// Paquete donde se encuentra esta clase dentro del proyecto
 package com.sgrh.demo.modelo;
 
+// Importaciones necesarias para trabajar con fechas
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -15,54 +17,69 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+// Esta clase será una entidad JPA (una tabla en la base de datos)
 @Entity
-@Table(name = "persona")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
+// Especifica el nombre de la tabla en la base de datos
+@Table(name = "persona")
+
+// Indica que se deben ignorar ciertas propiedades internas de Hibernate al convertir a JSON
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Persona {
 
+    // Campo clave primaria, generado automáticamente (auto-incremental)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // Atributos básicos de la persona
     private String nombre;
     private String apellido;
     private String correo;
     private String telefono;
     private String direccion;
 
+    // Documento único, no se puede repetir en la base de datos
     @Column(name = "documento_identidad", unique = true)
     private String documentoIdentidad;
 
+    // Fechas de nacimiento y contratación
     private LocalDate fechaNacimiento;
     private LocalDate fechaContratacion;
 
+    // Enum que representa el tipo de contrato laboral. Se guarda como texto en la BD
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_contrato")
     private TipoContrato tipoContrato;
 
+    // Enum que representa el rol de la persona. Se guarda como texto
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
+    // Estado activo o inactivo de la persona en el sistema
     private Boolean activo;
 
+    // Contraseña para acceder al sistema
     private String contrasena;
 
+    // Relación con la tabla empresa: muchas personas pueden estar en una empresa
     @ManyToOne
-    @JoinColumn(name = "id_empresa")
+    @JoinColumn(name = "id_empresa") // Llave foránea
     private Empresa empresa;
 
-    // Enums
+    // Enumeración para los tipos de contrato permitidos
     public enum TipoContrato {
         termino_fijo, termino_indefinido, prestacion_de_servicios
     }
 
+    // Enumeración para los roles permitidos en el sistema
     public enum Rol {
         empleado, supervisor, RRHH, gerente
     }
 
-    // Getters y setters
-        public Integer getId() {
+    // Getters y Setters para acceder y modificar los atributos
+
+    public Integer getId() {
         return id;
     }
 
